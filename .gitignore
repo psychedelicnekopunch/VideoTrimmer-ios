@@ -1,0 +1,13 @@
+.DS_Store
+xcuserdata
+xcuserdata/*
+xcshareddata
+
+*.xcworkspace
+Podfile.lock
+Pods
+
+*.app*
+*.ipa
+
+!AppIcon.appiconset

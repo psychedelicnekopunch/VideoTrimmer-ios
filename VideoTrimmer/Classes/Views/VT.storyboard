@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="i6Q-Go-Kvs">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="00w-YQ-CcV">
+            <objects>
+                <viewController storyboardIdentifier="VT" useStoryboardIdentifierAsRestorationIdentifier="YES" id="i6Q-Go-Kvs" customClass="VTViewController" customModule="VideoTrimmer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gaE-gm-lfe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKp-DZ-am5" customClass="TrimmerView" customModule="PryntTrimmerView">
+                                <rect key="frame" x="32" y="434" width="256" height="50"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.8771524235" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="XqC-CM-Vg1"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nG-Lm-uLR" customClass="VTVideoPlayerView" customModule="VideoTrimmer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="320" height="361"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.8771524235" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000.0s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uFK-By-zed">
+                                <rect key="frame" x="137.5" y="399" width="45" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXr-qo-7lL" customClass="TransparentView" customModule="VideoTrimmer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPm-5a-yZn" customClass="TransparentView" customModule="VideoTrimmer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0k-Xz-eYh" customClass="DefaultButton" customModule="VideoTrimmer" customModuleProvider="target">
+                                                <rect key="frame" x="38.5" y="15" width="83" height="30"/>
+                                                <state key="normal" title="Play / Pause"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.89620535710000004" green="1" blue="0.8771524235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="c0k-Xz-eYh" firstAttribute="centerX" secondItem="DPm-5a-yZn" secondAttribute="centerX" id="4jP-rS-Iqm"/>
+                                            <constraint firstItem="c0k-Xz-eYh" firstAttribute="centerY" secondItem="DPm-5a-yZn" secondAttribute="centerY" id="P11-gz-Rq1"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAD-3Y-Ypf" customClass="TransparentView" customModule="VideoTrimmer" customModuleProvider="target">
+                                        <rect key="frame" x="160" y="0.0" width="160" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T6x-kb-Z9b" customClass="DefaultButton" customModule="VideoTrimmer" customModuleProvider="target">
+                                                <rect key="frame" x="48" y="15" width="64" height="30"/>
+                                                <state key="normal" title="Trimming"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.9657965302" green="0.91699453880000004" blue="0.8491491108" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="T6x-kb-Z9b" firstAttribute="centerY" secondItem="ZAD-3Y-Ypf" secondAttribute="centerY" id="2ig-Nb-ZXc"/>
+                                            <constraint firstItem="T6x-kb-Z9b" firstAttribute="centerX" secondItem="ZAD-3Y-Ypf" secondAttribute="centerX" id="7w4-yy-GZQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.87819940480000003" green="0.86666666670000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="0mp-rb-Qjl"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZAD-3Y-Ypf" secondAttribute="bottom" id="Oir-a4-7qx"/>
+                                    <constraint firstItem="DPm-5a-yZn" firstAttribute="width" secondItem="wXr-qo-7lL" secondAttribute="width" multiplier="0.5" id="SAS-wW-shL"/>
+                                    <constraint firstItem="ZAD-3Y-Ypf" firstAttribute="width" secondItem="wXr-qo-7lL" secondAttribute="width" multiplier="0.5" id="SO9-ai-8kS"/>
+                                    <constraint firstAttribute="bottom" secondItem="DPm-5a-yZn" secondAttribute="bottom" id="ebw-1U-fuw"/>
+                                    <constraint firstItem="DPm-5a-yZn" firstAttribute="leading" secondItem="wXr-qo-7lL" secondAttribute="leading" id="qXJ-5m-qmh"/>
+                                    <constraint firstItem="ZAD-3Y-Ypf" firstAttribute="top" secondItem="wXr-qo-7lL" secondAttribute="top" id="vDh-F7-2pC"/>
+                                    <constraint firstItem="DPm-5a-yZn" firstAttribute="top" secondItem="wXr-qo-7lL" secondAttribute="top" id="xT3-z6-GIe"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZAD-3Y-Ypf" secondAttribute="trailing" id="y8R-oz-3gd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5nG-Lm-uLR" firstAttribute="top" secondItem="Lfm-Dj-70o" secondAttribute="top" id="2hH-xm-TWJ"/>
+                            <constraint firstItem="Lfm-Dj-70o" firstAttribute="trailing" secondItem="5nG-Lm-uLR" secondAttribute="trailing" id="3Wt-lN-K14"/>
+                            <constraint firstItem="wXr-qo-7lL" firstAttribute="top" secondItem="DKp-DZ-am5" secondAttribute="bottom" constant="24" id="7a5-jC-zE5"/>
+                            <constraint firstItem="Lfm-Dj-70o" firstAttribute="trailing" secondItem="wXr-qo-7lL" secondAttribute="trailing" id="OVY-7h-mFF"/>
+                            <constraint firstItem="DKp-DZ-am5" firstAttribute="leading" secondItem="Lfm-Dj-70o" secondAttribute="leading" constant="32" id="Tu6-51-6nG"/>
+                            <constraint firstItem="DKp-DZ-am5" firstAttribute="top" secondItem="uFK-By-zed" secondAttribute="bottom" constant="18" id="WpK-1L-d3a"/>
+                            <constraint firstItem="Lfm-Dj-70o" firstAttribute="trailing" secondItem="DKp-DZ-am5" secondAttribute="trailing" constant="32" id="YbT-w3-cVK"/>
+                            <constraint firstItem="5nG-Lm-uLR" firstAttribute="leading" secondItem="Lfm-Dj-70o" secondAttribute="leading" id="dhf-6D-j0Z"/>
+                            <constraint firstItem="wXr-qo-7lL" firstAttribute="leading" secondItem="Lfm-Dj-70o" secondAttribute="leading" id="qJ2-5A-Zh6"/>
+                            <constraint firstItem="wXr-qo-7lL" firstAttribute="bottom" secondItem="Lfm-Dj-70o" secondAttribute="bottom" id="rF4-H0-WIs"/>
+                            <constraint firstItem="uFK-By-zed" firstAttribute="centerX" secondItem="gaE-gm-lfe" secondAttribute="centerX" id="tPd-GI-reQ"/>
+                            <constraint firstItem="uFK-By-zed" firstAttribute="top" secondItem="5nG-Lm-uLR" secondAttribute="bottom" constant="18" id="uNU-gH-cT1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Lfm-Dj-70o"/>
+                    </view>
+                    <connections>
+                        <outlet property="playerButton" destination="c0k-Xz-eYh" id="8bn-zn-HrI"/>
+                        <outlet property="timeLabel" destination="uFK-By-zed" id="oyB-X2-HH0"/>
+                        <outlet property="trimmerView" destination="DKp-DZ-am5" id="vYa-sr-vxb"/>
+                        <outlet property="trimmingButton" destination="T6x-kb-Z9b" id="lxq-Fs-87h"/>
+                        <outlet property="videoPlayerView" destination="5nG-Lm-uLR" id="zWx-5i-JqC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8FK-EP-64d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="165" y="176.40845070422534"/>
+        </scene>
+    </scenes>
+</document>
