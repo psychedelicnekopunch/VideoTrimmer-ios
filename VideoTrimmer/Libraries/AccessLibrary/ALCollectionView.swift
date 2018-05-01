@@ -9,6 +9,13 @@ class ALCollectionView: DefaultCollectionView, UICollectionViewDataSource, UICol
     private var cellSize: CGFloat = 0
     
     
+    enum listType {
+        case image
+        case video
+        case imageAndVideo
+    }
+    
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.cellSize = (self.frame.width / 3) - 1
@@ -16,18 +23,40 @@ class ALCollectionView: DefaultCollectionView, UICollectionViewDataSource, UICol
     }
     
     
-    func initList() {
+    func initList(type: listType, callback: @escaping (_ isAuthorization: Bool) -> Void) {
         self.requestAuthorization { (isAuthorization: Bool) in
             if isAuthorization {
-//                self.initListImage {
+                switch type {
+                case .image:
+                    self.initListImage {
+                        // メインスレッドで reloadData() を呼ばないと警告が出る
+                        DispatchQueue.main.async {
+                            self.reloadData()
+                            callback(isAuthorization)
+                        }
+                    }
+                case .video:
                     self.initListVideo {
                         // メインスレッドで reloadData() を呼ばないと警告が出る
                         DispatchQueue.main.async {
                             self.reloadData()
+                            callback(isAuthorization)
                         }
                     }
-//                }
+                case .imageAndVideo:
+                    self.initListImage {
+                        self.initListVideo {
+                            // メインスレッドで reloadData() を呼ばないと警告が出る
+                            DispatchQueue.main.async {
+                                self.reloadData()
+                                callback(isAuthorization)
+                            }
+                        }
+                    }
+                }
+                return
             }
+            callback(false)
         }
     }
     

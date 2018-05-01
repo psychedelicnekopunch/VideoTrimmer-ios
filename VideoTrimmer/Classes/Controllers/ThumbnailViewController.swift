@@ -42,7 +42,9 @@ class ThumbnailViewController: UIViewController {
                 }
             }
         }
-        alCollectionView.initList()
+        alCollectionView.initList(type: .video) { (isAuthorization: Bool) in
+            print("isAuthorization: \(isAuthorization)")
+        }
     }
     
     
