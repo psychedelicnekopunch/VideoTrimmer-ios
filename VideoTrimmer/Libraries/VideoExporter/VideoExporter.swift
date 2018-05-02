@@ -33,6 +33,8 @@ class VideoExporter {
     
     private var to: URL
     
+    var quality: String = AVAssetExportPreset1280x720
+    
     var startTime: CMTime?
     
     var endTime: CMTime?
@@ -68,6 +70,12 @@ class VideoExporter {
     
     
     public func export(urlAsset asset: AVURLAsset, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
+        
+        // 動画削除
+        let file: FileManager = FileManager()
+        do {
+            try? file.removeItem(at: self.to)
+        }
         
         let startTime: CMTime = (self.startTime == nil) ? kCMTimeZero : self.startTime!
         let endTime: CMTime = (self.endTime == nil) ? asset.duration : self.endTime!
@@ -198,26 +206,12 @@ class VideoExporter {
         videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
         
         // 12. 動画出力用オブジェクトを生成する
-        // 動画削除
-        let file: FileManager = FileManager()
-        do {
-            try? file.removeItem(at: self.to)
-        }
-        
         // 画質 (AVAssetExportPreset)
-        //        let quality: String = AVAssetExportPresetHighestQuality
-        //        let quality: String = AVAssetExportPresetMediumQuality
-        //        let quality: String = AVAssetExportPreset640x480
-        let quality: String = AVAssetExportPreset1280x720
-        let exportSession: AVAssetExportSession
-        
-        guard let es: AVAssetExportSession = AVAssetExportSession(asset: mutableComposition, presetName: quality) else {
+        guard let exportSession: AVAssetExportSession = AVAssetExportSession(asset: mutableComposition, presetName: self.quality) else {
             completion(true, "failed: AVAssetExportSession.init")
             return
         }
-        exportSession = es
         
-        //        completion(false, "success")
         // 13. 保存設定を行い、Exportを実行
         exportSession.videoComposition = videoComposition
         exportSession.audioMix = audioMix
