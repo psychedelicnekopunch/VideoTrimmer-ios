@@ -114,13 +114,13 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
     // MARK: - TrimmerViewDelegate
     
     func didChangePositionBar(_ playerTime: CMTime) {
-        self.videoPlayerView.pause()
+        videoPlayerView.pause()
         if let startTime: CMTime = trimmerView.startTime, let endTime: CMTime = trimmerView.endTime {
             let diff: Double = endTime.seconds - startTime.seconds
             timeLabel.text = diff.toFormatedString()
-            self.videoPlayerView.seek(to: playerTime)
-            self.videoPlayerView.startTime = startTime
-            self.videoPlayerView.endTime = endTime
+            videoPlayerView.seek(to: playerTime)
+            videoPlayerView.startTime = startTime
+            videoPlayerView.endTime = endTime
         }
     }
     
@@ -129,9 +129,9 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
         if let startTime: CMTime = trimmerView.startTime, let endTime: CMTime = trimmerView.endTime {
             let diff: Double = endTime.seconds - startTime.seconds
             timeLabel.text = diff.toFormatedString()
-            self.videoPlayerView.seek(to: playerTime)
-            self.videoPlayerView.startTime = startTime
-            self.videoPlayerView.endTime = endTime
+            videoPlayerView.seek(to: playerTime)
+            videoPlayerView.startTime = startTime
+            videoPlayerView.endTime = endTime
         }
     }
     
