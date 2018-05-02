@@ -45,9 +45,11 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
     
     
     private func initPlayer() {
+        // 5700 / 600 = 9.5s
+        let maxDuration: CMTime = CMTimeMake(5700, 600)
         timeLabel.text = ""
         trimmerView.minDuration = 1.0
-        trimmerView.maxDuration = 9.5
+        trimmerView.maxDuration = maxDuration.seconds
         trimmerView.delegate = self
         self.asset?.toAVAsset { (asset: AVAsset?) in
             if let a: AVAsset = asset {
@@ -56,6 +58,8 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
                 DispatchQueue.main.async {
                     self.videoPlayerView.prepare(asset: a)
                     self.trimmerView.asset = a
+                    self.timeLabel.text = maxDuration.seconds.toFormatedString()
+                    self.videoPlayerView.endTime = maxDuration
                 }
             }
         }
