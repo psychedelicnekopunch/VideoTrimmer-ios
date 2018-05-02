@@ -22,7 +22,6 @@
 		04728CBB2092CEDF00A8081A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04728CB92092CEDF00A8081A /* LaunchScreen.storyboard */; };
 		04728CC62092CEDF00A8081A /* VideoTrimmerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04728CC52092CEDF00A8081A /* VideoTrimmerTests.swift */; };
 		04728CD12092CEDF00A8081A /* VideoTrimmerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04728CD02092CEDF00A8081A /* VideoTrimmerUITests.swift */; };
-		04728CE62092F9C900A8081A /* VTRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04728CE52092F9C900A8081A /* VTRangeView.swift */; };
 		04728CE92093144300A8081A /* LicenceTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04728CE82093144300A8081A /* LicenceTextView.swift */; };
 		04728CEB2093146B00A8081A /* Acknowledgements.md in Resources */ = {isa = PBXBuildFile; fileRef = 04728CEA2093146300A8081A /* Acknowledgements.md */; };
 		04728CEE2093195D00A8081A /* ThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04728CED2093195D00A8081A /* ThumbnailViewController.swift */; };
@@ -84,7 +83,6 @@
 		04728CCC2092CEDF00A8081A /* VideoTrimmerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoTrimmerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04728CD02092CEDF00A8081A /* VideoTrimmerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTrimmerUITests.swift; sourceTree = "<group>"; };
 		04728CD22092CEDF00A8081A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04728CE52092F9C900A8081A /* VTRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTRangeView.swift; sourceTree = "<group>"; };
 		04728CE82093144300A8081A /* LicenceTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceTextView.swift; sourceTree = "<group>"; };
 		04728CEA2093146300A8081A /* Acknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		04728CED2093195D00A8081A /* ThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +206,7 @@
 				0457A599209412F00064D8AB /* LicenceViewController.swift */,
 				04728CB22092CEDE00A8081A /* MainViewController.swift */,
 				04728CED2093195D00A8081A /* ThumbnailViewController.swift */,
+				04728D0420931C4500A8081A /* VTViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -268,9 +267,7 @@
 		04728CE42092F99A00A8081A /* VideoTrimmer */ = {
 			isa = PBXGroup;
 			children = (
-				04728CE52092F9C900A8081A /* VTRangeView.swift */,
 				04728D0820931D4500A8081A /* VTVideoPlayerView.swift */,
-				04728D0420931C4500A8081A /* VTViewController.swift */,
 			);
 			path = VideoTrimmer;
 			sourceTree = "<group>";
@@ -635,7 +632,6 @@
 				04728CF620931A2000A8081A /* DoubleExtension.swift in Sources */,
 				04728CB12092CEDE00A8081A /* AppDelegate.swift in Sources */,
 				04728D0920931D4500A8081A /* VTVideoPlayerView.swift in Sources */,
-				04728CE62092F9C900A8081A /* VTRangeView.swift in Sources */,
 				04728CF4209319E400A8081A /* ALCollectionView.swift in Sources */,
 				04728CFA20931A4C00A8081A /* UIColorExtension.swift in Sources */,
 				04728D0520931C4500A8081A /* VTViewController.swift in Sources */,

@@ -13,9 +13,10 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
     
     @IBOutlet weak var timeLabel: UILabel!
     
+    
     var asset: PHAsset?
     
-    var avAsset: AVAsset?
+    private var avAsset: AVAsset?
     
     
     override func viewDidLoad() {
@@ -72,12 +73,27 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
         trimmingButton.touchDown = {
             if let asset: AVAsset = self.avAsset {
                 print("start export")
-                VideoExporter.sharedInstance.export(asset: asset, start: self.videoPlayerView.startTime, end: self.videoPlayerView.endTime, volume: 1.0) { (error: Bool, message: String) in
-                    print(message)
+                let exporter: VideoExporter = VideoExporter(to: FileManager.videoExportURL)
+                exporter.startTime = self.videoPlayerView.startTime
+                exporter.endTime = self.videoPlayerView.endTime
+                exporter.export(asset: asset) { (error: Bool, message: String) in
                     if error {
+                        print(message)
                         return
                     }
-                    self.close()
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exporter.outputUrl)
+                    }, completionHandler: { (success: Bool, error: Error?) in
+                        if success {
+                            self.close()
+                            return
+                        }
+                        var message: String = "failed: save to Library"
+                        if let err: Error = error {
+                            message = err.localizedDescription
+                        }
+                        print(message)
+                    })
                 }
             }
         }

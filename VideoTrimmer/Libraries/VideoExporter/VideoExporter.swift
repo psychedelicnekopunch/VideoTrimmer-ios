@@ -1,7 +1,6 @@
 
 import UIKit
 import AVFoundation
-import Photos
 
 /*
  https://qiita.com/edo_m18/items/cf3a183ad73bb711b195
@@ -24,53 +23,73 @@ import Photos
 
 class VideoExporter {
     
-    static var sharedInstance: VideoExporter = VideoExporter()
+    var outputUrl: URL {
+        get {
+            return self.to
+        }
+    }
+    
+    private var outputFileType: AVFileType = .mp4
+    
+    private var to: URL
+    
+    var startTime: CMTime?
+    
+    var endTime: CMTime?
+    
+    var volume: Float = 1.0
+    
+    var views: [UIView] = [UIView]()
     
     
-    private var startTime: CMTime?
+    init(to: URL) {
+        self.to = to
+    }
     
-    private var endTime: CMTime?
+    init(to: URL, type: AVFileType) {
+        self.to = to
+        self.outputFileType = type
+    }
     
     
-    public func export(asset: AVAsset, start: CMTime, end: CMTime, volume: Float, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
-        self.startTime = start
-        self.endTime = end
-        self.export(asset: asset as! AVURLAsset, views: [], volume: volume) { (error: Bool, message: String) in
+    public func export(asset: AVAsset, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
+        self.export(urlAsset: asset as! AVURLAsset) { (error: Bool, message: String) in
             completion(error, message)
         }
     }
     
     
-    public func export(videoUrl: URL, views: [UIView], volume: Float, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
-        let asset: AVURLAsset = AVURLAsset(url: videoUrl, options: nil)
-        self.export(asset: asset, views: views, volume: volume) { (error: Bool, message: String) in
+    public func export(url: URL, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
+        let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
+        self.export(urlAsset: asset) { (error: Bool, message: String) in
             completion(error, message)
         }
     }
     
     
-    public func export(asset videoAsset: AVURLAsset, views: [UIView], volume: Float, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
+    public func export(urlAsset asset: AVURLAsset, completion: @escaping (_ error: Bool, _ message: String) -> Void) {
         
         let startTime: CMTime = (self.startTime == nil) ? kCMTimeZero : self.startTime!
-        let endTime: CMTime = (self.endTime == nil) ? videoAsset.duration : self.endTime!
+        let endTime: CMTime = (self.endTime == nil) ? asset.duration : self.endTime!
         let timeRange: CMTimeRange = CMTimeRange(start: startTime, end: endTime)
         
         print(startTime.seconds, endTime.seconds)
         
         // 1. 合成を実行するAVMutableCompositionオブジェクトを作る
         let mutableComposition: AVMutableComposition = AVMutableComposition()
+        
         // 2. AVAssetオブジェクトの生成と、オブジェクトから動画部分と音声部分のトラック情報をそれぞれ取得する
-        if videoAsset.tracks(withMediaType: .video).count == 0 {
+        if asset.tracks(withMediaType: .video).count == 0 {
             completion(true, "動画のエクスポートに失敗しました")
             return
         }
         
-        let videoTrack: AVAssetTrack = videoAsset.tracks(withMediaType: .video)[0]
+        let videoTrack: AVAssetTrack = asset.tracks(withMediaType: .video)[0]
         var audioTrackTemp: AVAssetTrack?
         
         // 音声トラックがない動画の場合がある
-        if videoAsset.tracks(withMediaType: .audio).count > 0 {
-            audioTrackTemp = videoAsset.tracks(withMediaType: .audio)[0]
+        if asset.tracks(withMediaType: .audio).count > 0 {
+            audioTrackTemp = asset.tracks(withMediaType: .audio)[0]
         }
         
         // 3. トラック合成用のAVMutableCompositionTrackを、AVMutableCompositionから生成する
@@ -81,7 +100,7 @@ class VideoExporter {
         
         var compositionAudioTrack: AVMutableCompositionTrack?
         
-        if volume > 0 {
+        if self.volume > 0 {
             if let _: AVAssetTrack = audioTrackTemp {
                 compositionAudioTrack = mutableComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
             }
@@ -90,7 +109,7 @@ class VideoExporter {
         // 4. (3)で生成したトラックに動画・音声を登録する
         try? compositionVideoTrack.insertTimeRange(timeRange, of: videoTrack, at: kCMTimeZero)
         
-        if volume > 0 {
+        if self.volume > 0 {
             if let audioTrack: AVAssetTrack = audioTrackTemp {
                 try? compositionAudioTrack?.insertTimeRange(timeRange, of: audioTrack, at: kCMTimeZero)
             }
@@ -131,10 +150,10 @@ class VideoExporter {
         
         // 7. 音声合成用パラメータオブジェクトの生成（AVMutableAudioMixInputParameters）
         var audioMixInputParameters: AVMutableAudioMixInputParameters?
-        if volume > 0 {
+        if self.volume > 0 {
             if let _: AVAssetTrack = audioTrackTemp {
                 audioMixInputParameters = AVMutableAudioMixInputParameters(track: compositionAudioTrack)
-                audioMixInputParameters?.setVolumeRamp(fromStartVolume: volume, toEndVolume: volume, timeRange: CMTimeRangeMake(kCMTimeZero, mutableComposition.duration))
+                audioMixInputParameters?.setVolumeRamp(fromStartVolume: self.volume, toEndVolume: self.volume, timeRange: CMTimeRangeMake(kCMTimeZero, mutableComposition.duration))
             }
         }
         
@@ -180,7 +199,11 @@ class VideoExporter {
         
         // 12. 動画出力用オブジェクトを生成する
         // 動画削除
-        FileManager.sharedInstance.remove(atPath: FileManager.videoExportPath)
+        let file: FileManager = FileManager()
+        do {
+            try? file.removeItem(at: self.to)
+        }
+        
         // 画質 (AVAssetExportPreset)
         //        let quality: String = AVAssetExportPresetHighestQuality
         //        let quality: String = AVAssetExportPresetMediumQuality
@@ -198,27 +221,13 @@ class VideoExporter {
         // 13. 保存設定を行い、Exportを実行
         exportSession.videoComposition = videoComposition
         exportSession.audioMix = audioMix
-        exportSession.outputFileType = AVFileType.mp4
-        exportSession.outputURL = FileManager.videoExportURL
+        exportSession.outputFileType = self.outputFileType
+        exportSession.outputURL = self.to
         exportSession.shouldOptimizeForNetworkUse = true
         exportSession.exportAsynchronously(completionHandler: {
             switch exportSession.status {
             case .completed:
-                //                completion(false, "success")
-                // 端末に保存
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: FileManager.videoExportURL)
-                }, completionHandler: { (success: Bool, error: Error?) in
-                    if success {
-                        completion(false, "success")
-                        return
-                    }
-                    guard let err: Error = error else {
-                        completion(true, "failed: save to Library")
-                        return
-                    }
-                    completion(true, err.localizedDescription)
-                })
+                completion(false, "success")
             case .cancelled:
                 completion(true, "cancelled: export")
             case .exporting:

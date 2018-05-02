@@ -7,7 +7,7 @@ class ThumbnailViewController: UIViewController {
     @IBOutlet weak var alCollectionView: ALCollectionView!
     
     
-    var item: DefaultNavigationItem?
+    private var item: DefaultNavigationItem?
     
     
     override func viewDidLoad() {
