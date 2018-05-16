@@ -33,7 +33,7 @@ class VideoExporter {
     
     private var to: URL
     
-    var quality: String = AVAssetExportPreset1280x720
+    var quality: Quality = .AVAssetExportPreset1280x720
     
     var startTime: CMTime?
     
@@ -42,6 +42,18 @@ class VideoExporter {
     var volume: Float = 1.0
     
     var views: [UIView] = [UIView]()
+    
+    
+    enum Quality: String {
+        case AVAssetExportPreset640x480
+        case AVAssetExportPreset960x540
+        case AVAssetExportPreset1280x720
+        case AVAssetExportPreset1920x1080
+        case AVAssetExportPreset3840x2160
+        case AVAssetExportPresetLowQuality
+        case AVAssetExportPresetMediumQuality
+        case AVAssetExportPresetHighestQuality
+    }
     
     
     init(to: URL) {
@@ -207,7 +219,7 @@ class VideoExporter {
         
         // 12. 動画出力用オブジェクトを生成する
         // 画質 (AVAssetExportPreset)
-        guard let exportSession: AVAssetExportSession = AVAssetExportSession(asset: mutableComposition, presetName: self.quality) else {
+        guard let exportSession: AVAssetExportSession = AVAssetExportSession(asset: mutableComposition, presetName: self.quality.rawValue) else {
             completion(true, "failed: AVAssetExportSession.init")
             return
         }

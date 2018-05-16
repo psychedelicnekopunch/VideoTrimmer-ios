@@ -58,8 +58,8 @@ class VTViewController: UIViewController, TrimmerViewDelegate {
                 DispatchQueue.main.async {
                     self.videoPlayerView.prepare(asset: a)
                     self.trimmerView.asset = a
-                    self.timeLabel.text = maxDuration.seconds.toFormatedString()
-                    self.videoPlayerView.endTime = maxDuration
+                    self.timeLabel.text = (self.videoPlayerView.endTime.seconds < maxDuration.seconds) ? self.videoPlayerView.endTime.seconds.toFormatedString() : maxDuration.seconds.toFormatedString()
+                    self.videoPlayerView.endTime = (self.videoPlayerView.endTime.seconds < maxDuration.seconds) ? self.videoPlayerView.endTime : maxDuration
                 }
             }
         }
