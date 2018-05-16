@@ -56,13 +56,28 @@ class VideoExporter {
     }
     
     
+    enum Extention {
+        case m4v
+        case mov
+        case mp4
+    }
+    
+    
     init(to: URL) {
         self.to = to
     }
     
-    init(to: URL, type: AVFileType) {
+    init(to: URL, type: Extention) {
         self.to = to
-        self.outputFileType = type
+        switch type {
+        case .m4v:
+            self.outputFileType = .m4v
+        case .mov:
+            self.outputFileType = .mov
+        case .mp4:
+            self.outputFileType = .mp4
+        }
+        
     }
     
     
